@@ -44,8 +44,15 @@ function noWeakLink() {
     url: '/api/users'
   })
   // CODE HERE...
-
-}
+  .then(response =>{
+    firstUser = response.data[0]
+    return response
+  })
+  .then( response =>{
+    thirdUser = response.data[2]
+    return response.data[9]
+  })
+};
 
 
 
@@ -70,12 +77,10 @@ var elephant = {
   name: 'Horton'
 }
 function large() {
-
   return 'My name is ' + this.name + ' and I am very heavy!'
-}
+};
 // CODE HERE...
-
-
+boundToElephant = large.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -88,7 +93,9 @@ function large() {
 // and return the bound function.
 
 // CODE HERE...
-
+function deathStar(capacity, crew){
+  return capacity.bind(crew)
+};
 
 
 // *************
@@ -103,7 +110,11 @@ function large() {
 // The closure function will return the combined value of assets and liabilities.
 
 // CODE HERE...
-
+  function accountingOffice(assets){
+    return function(liabilities){
+      return assets + liabilities
+    }
+  };
 
 
 // *************
@@ -128,7 +139,16 @@ function large() {
 // };
 
 // CODE HERE...
-
+  function forgetter(name){
+    let remember = []
+    return function rememberall (item){
+      remember.push(item)
+      return {
+        name,
+        remember
+      }
+    };
+  };
 
 
 // *************
@@ -156,3 +176,34 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+function frodo( startingHungerValue, startingDangerValue ) {
+  
+  return {
+
+    hunger: startingHungerValue,
+    danger: startingDangerValue,
+
+    dinnerOverFire : function () {
+
+      this.hunger <= 0 ? this.hunger = 0 : this.hunger -= 25
+      this.danger >= 100 ? this.danger = 100 : this.danger += 40
+
+      return {
+        hunger: this.hunger,
+        danger: this.danger
+      }
+    },
+
+    hidingInBush : function () {
+
+      this.hunger >= 100 ? this.hunger = 100 : this.hunger += 35
+      this.danger <= 0 ? this.danger = 0 : this.danger -= 20
+
+      return {
+        hunger: this.hunger,
+        danger: this.danger
+      }
+    }
+  }
+
+};
